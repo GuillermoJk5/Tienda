@@ -18,12 +18,12 @@ class Marcas
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\OneToMany(mappedBy: 'marca', targetEntity: Producto::class, orphanRemoval: true)]
-    private Collection $producto;
+    #[ORM\OneToMany(mappedBy: 'id_marca', targetEntity: Productos::class)]
+    private Collection $productos;
 
     public function __construct()
     {
-        $this->producto = new ArrayCollection();
+        $this->productos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,29 +51,29 @@ class Marcas
     }
 
     /**
-     * @return Collection<int, Producto>
+     * @return Collection<int, Productos>
      */
-    public function getProducto(): Collection
+    public function getProductos(): Collection
     {
-        return $this->producto;
+        return $this->productos;
     }
 
-    public function addProducto(Producto $producto): static
+    public function addProducto(Productos $producto): static
     {
-        if (!$this->producto->contains($producto)) {
-            $this->producto->add($producto);
-            $producto->setMarca($this);
+        if (!$this->productos->contains($producto)) {
+            $this->productos->add($producto);
+            $producto->setIdMarca($this);
         }
 
         return $this;
     }
 
-    public function removeProducto(Producto $producto): static
+    public function removeProducto(Productos $producto): static
     {
-        if ($this->producto->removeElement($producto)) {
+        if ($this->productos->removeElement($producto)) {
             // set the owning side to null (unless already changed)
-            if ($producto->getMarca() === $this) {
-                $producto->setMarca(null);
+            if ($producto->getIdMarca() === $this) {
+                $producto->setIdMarca(null);
             }
         }
 

@@ -15,15 +15,16 @@ class Categorias
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    #[ORM\OneToMany(mappedBy: 'id_categoria', targetEntity: Idiomascategorias::class, orphanRemoval: true)]
+    private Collection $idiomascategorias;
 
-    #[ORM\OneToMany(mappedBy: 'categoria', targetEntity: Producto::class, orphanRemoval: true)]
-    private Collection $producto;
+    #[ORM\OneToMany(mappedBy: 'id_categoria', targetEntity: Productos::class, orphanRemoval: true)]
+    private Collection $productos;
 
     public function __construct()
     {
-        $this->producto = new ArrayCollection();
+        $this->idiomascategorias = new ArrayCollection();
+        $this->productos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,42 +39,60 @@ class Categorias
         return $this;
     }
 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): static
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Producto>
+     * @return Collection<int, Idiomascategorias>
      */
-    public function getProducto(): Collection
+    public function getIdiomascategorias(): Collection
     {
-        return $this->producto;
+        return $this->idiomascategorias;
     }
 
-    public function addProducto(Producto $producto): static
+    public function addIdiomascategoria(Idiomascategorias $idiomascategoria): static
     {
-        if (!$this->producto->contains($producto)) {
-            $this->producto->add($producto);
-            $producto->setCategoria($this);
+        if (!$this->idiomascategorias->contains($idiomascategoria)) {
+            $this->idiomascategorias->add($idiomascategoria);
+            $idiomascategoria->setIdCategoria($this);
         }
 
         return $this;
     }
 
-    public function removeProducto(Producto $producto): static
+    public function removeIdiomascategoria(Idiomascategorias $idiomascategoria): static
     {
-        if ($this->producto->removeElement($producto)) {
+        if ($this->idiomascategorias->removeElement($idiomascategoria)) {
             // set the owning side to null (unless already changed)
-            if ($producto->getCategoria() === $this) {
-                $producto->setCategoria(null);
+            if ($idiomascategoria->getIdCategoria() === $this) {
+                $idiomascategoria->setIdCategoria(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Productos>
+     */
+    public function getProductos(): Collection
+    {
+        return $this->productos;
+    }
+
+    public function addProducto(Productos $producto): static
+    {
+        if (!$this->productos->contains($producto)) {
+            $this->productos->add($producto);
+            $producto->setIdCategoria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProducto(Productos $producto): static
+    {
+        if ($this->productos->removeElement($producto)) {
+            // set the owning side to null (unless already changed)
+            if ($producto->getIdCategoria() === $this) {
+                $producto->setIdCategoria(null);
             }
         }
 

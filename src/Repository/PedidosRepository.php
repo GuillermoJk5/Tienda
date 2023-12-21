@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Producto;
+use App\Entity\Pedidos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Producto>
+ * @extends ServiceEntityRepository<Pedidos>
  *
- * @method Producto|null find($id, $lockMode = null, $lockVersion = null)
- * @method Producto|null findOneBy(array $criteria, array $orderBy = null)
- * @method Producto[]    findAll()
- * @method Producto[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Pedidos|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Pedidos|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Pedidos[]    findAll()
+ * @method Pedidos[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductoRepository extends ServiceEntityRepository
+class PedidosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Producto::class);
+        parent::__construct($registry, Pedidos::class);
     }
 
 //    /**
-//     * @return Producto[] Returns an array of Producto objects
+//     * @return Pedidos[] Returns an array of Pedidos objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class ProductoRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Producto
+//    public function findOneBySomeField($value): ?Pedidos
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
